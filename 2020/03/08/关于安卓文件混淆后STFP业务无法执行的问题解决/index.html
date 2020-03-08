@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>关于安卓文件混淆后STFP业务无法执行的问题解决 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="背景最近需要把SFTP业务继承到公司的项目中去，而在集成的过程中遇到了一些难题，本地打包的版本做SFTP的业务是没有任何问题的，而版本构建服服务器构建的版本却无法执行，执行后直接crash掉 分析分析了一下本地打包与服务器打包的区别，发现一个是DEBUG模式，一个是Release模式，而Release模式下开启了混淆，因此怀疑是混淆引起的。于是尝试对jsch的包进行去混淆。最开始我在proguar">
+  <meta name="description" content="背景最近需要把SFTP业务继承到公司的项目中去，而在集成的过程中遇到了一些难题，本地打包的版本做SFTP的业务是没有任何问题的，而版本构建服服务器构建的版本却无法执行，执行后直接crash掉">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于安卓文件混淆后STFP业务无法执行的问题解决">
 <meta property="og:url" content="http://yoursite.com/2020/03/08/关于安卓文件混淆后STFP业务无法执行的问题解决/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="背景最近需要把SFTP业务继承到公司的项目中去，而在集成的过程中遇到了一些难题，本地打包的版本做SFTP的业务是没有任何问题的，而版本构建服服务器构建的版本却无法执行，执行后直接crash掉 分析分析了一下本地打包与服务器打包的区别，发现一个是DEBUG模式，一个是Release模式，而Release模式下开启了混淆，因此怀疑是混淆引起的。于是尝试对jsch的包进行去混淆。最开始我在proguar">
+<meta property="og:description" content="背景最近需要把SFTP业务继承到公司的项目中去，而在集成的过程中遇到了一些难题，本地打包的版本做SFTP的业务是没有任何问题的，而版本构建服服务器构建的版本却无法执行，执行后直接crash掉">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-03-08T14:56:38.000Z">
+<meta property="og:updated_time" content="2020-03-08T15:03:23.665Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于安卓文件混淆后STFP业务无法执行的问题解决">
-<meta name="twitter:description" content="背景最近需要把SFTP业务继承到公司的项目中去，而在集成的过程中遇到了一些难题，本地打包的版本做SFTP的业务是没有任何问题的，而版本构建服服务器构建的版本却无法执行，执行后直接crash掉 分析分析了一下本地打包与服务器打包的区别，发现一个是DEBUG模式，一个是Release模式，而Release模式下开启了混淆，因此怀疑是混淆引起的。于是尝试对jsch的包进行去混淆。最开始我在proguar">
+<meta name="twitter:description" content="背景最近需要把SFTP业务继承到公司的项目中去，而在集成的过程中遇到了一些难题，本地打包的版本做SFTP的业务是没有任何问题的，而版本构建服服务器构建的版本却无法执行，执行后直接crash掉">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -175,6 +175,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近需要把SFTP业务继承到公司的项目中去，而在集成的过程中遇到了一些难题，本地打包的版本做SFTP的业务是没有任何问题的，而版本构建服服务器构建的版本却无法执行，执行后直接crash掉</p>
+<a id="more"></a>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>分析了一下本地打包与服务器打包的区别，发现一个是DEBUG模式，一个是Release模式，而Release模式下开启了混淆，因此怀疑是混淆引起的。于是尝试对jsch的包进行去混淆。<br>最开始我在proguard-project.txt文件中加入了<br> keep class com.jcraft.jsch.<em>*{</em>;}<br>发现没有解决问题，后来尝试把调用该jar包的文件去掉混淆<br> keep public class com.xxx.xxx.xxx.sftputils{*;}<br> 加入这行后，crash问题解决了</p>
 <h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p> 对于调用jar包引起的混淆问题，一般把调用jar包的地方去掉混淆或许能解决问题。</p>
 
